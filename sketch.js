@@ -12,6 +12,18 @@ let engine;
 let world;
 var grandechurrasco; 
 var ground;
+var academia;
+var nutricao;
+var alfredo;
+var alfredofitness;
+var tentacao;
+
+function preload(){
+  academia = loadImage("background.png");
+  nutricao = loadImage("melon.png");
+  alfredo = loadImage("Rabbit-01.png");
+
+}
 
 function setup() 
 {
@@ -30,8 +42,18 @@ Matter.Composite.add(linguica.body,natura);
 
 grandechurrasco=new Grandechurrasco(linguica,natura)
 
+alfredofitness=createSprite(250,630,100,100);
+alfredofitness.addImage(alfredo);
+alfredofitness.scale=0.3;
+
+tentacao=createImg("cut_button.png");
+tentacao.position(220,30);
+tentacao.size(50,50);
+tentacao.mouseClicked(churrascovegano);
+
 
   rectMode(CENTER);
+  imageMode(CENTER);
   ellipseMode(RADIUS);
   textSize(50)
 }
@@ -39,15 +61,25 @@ grandechurrasco=new Grandechurrasco(linguica,natura)
 function draw() 
 {
   background(51);
+  image(academia, width/2, height/2, 500, 700);
+
   Engine.update(engine);
-  ellipse(natura.position.x,natura.position.y,15,15);
+  image(nutricao, natura.position.x,natura.position.y,60,60);
   
 
 
   ground.show();
   linguica.show();
-}
+  
+  drawSprites();
 
+}
+function churrascovegano(){
+  linguica.break();
+grandechurrasco.cabou();
+grandechurrasco=null;
+
+}
 
 
 
