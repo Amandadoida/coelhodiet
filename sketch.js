@@ -20,6 +20,9 @@ var tentacao;
 var piscadinha;
 var seAlimentando;
 var comeuBesteira;
+var musicadotiozao, quebrouasleisdanutricionista, comidasuja, comidagostosa, ffffffff;
+var chicotedanutricionista;
+var caixadeSom;
 
 function preload(){
   academia = loadImage("background.png");
@@ -28,8 +31,13 @@ function preload(){
 
   piscadinha = loadAnimation("blink_1.png","blink_2.png","blink_3.png");
   seAlimentando = loadAnimation("eat_0.png","eat_1.png","eat_2.png","eat_3.png","eat_4.png");
-comeuBesteira = loadAnimation("sad_1.png","sad_2.png","sad_3.png");
+  comeuBesteira = loadAnimation("sad_1.png","sad_2.png","sad_3.png");
 
+  musicadotiozao = loadSound("sound1.mp3");
+  quebrouasleisdanutricionista = loadSound("rope_cut.mp3");
+  comidasuja = loadSound("sad.wav");
+  comidagostosa = loadSound("eating_sound.mp3");
+  ffffffff = loadSound("air.wav");
 
   piscadinha.playing = true;
   seAlimentando.playing = true;
@@ -42,6 +50,8 @@ comeuBesteira.looping = false;
 function setup() 
 {
   createCanvas(500,700);
+  musicadotiozao.play();
+  musicadotiozao.setVolume(0.2);
   engine = Engine.create();
   world = engine.world;
 
@@ -51,6 +61,7 @@ function setup()
   ground = new Ground(200, 690, 600, 20);
   linguica=new Rope(6,{x:245,y:30});
 
+
 var options={
   density:0.001
 }
@@ -59,7 +70,7 @@ Matter.Composite.add(linguica.body,natura);
 
 grandechurrasco=new Grandechurrasco(linguica,natura)
 
-alfredofitness=createSprite(250,630,100,100);
+alfredofitness=createSprite(420,630,100,100);
 alfredofitness.addImage(alfredo);
 alfredofitness.scale=0.2;
 alfredofitness.addAnimation("piscadinha", piscadinha);
@@ -67,11 +78,20 @@ alfredofitness.addAnimation("seAlimentando", seAlimentando);
 alfredofitness.addAnimation("comeuBesteira",comeuBesteira);
 alfredofitness.changeAnimation("piscadinha");
 
+chicotedanutricionista=createImg("balloon.png");
+chicotedanutricionista.position(10,250);
+chicotedanutricionista.size(150,100);
+chicotedanutricionista.mouseClicked(barulhosdoSentimento);
+
 tentacao=createImg("cut_button.png");
 tentacao.position(220,30);
 tentacao.size(50,50);
 tentacao.mouseClicked(churrascovegano);
 
+caixadeSom=createImg("mute.png");
+caixadeSom.position(450,20);
+caixadeSom.size(50,50);
+caixadeSom.mouseClicked(buchoCheio);
 
   rectMode(CENTER);
   imageMode(CENTER);
@@ -97,9 +117,12 @@ function draw()
   linguica.show();
   if( alfredoencontroufelicidade(natura,alfredofitness)===true){
     alfredofitness.changeAnimation("seAlimentando");
+    comidagostosa.play();
   }
   if(natura!==null&&natura.position.y>=650){
     alfredofitness.changeAnimation("comeuBesteira");
+    comidasuja.play();
+    musicadotiozao.stop();
     natura=null;
   }
   
@@ -107,6 +130,8 @@ function draw()
 
 }
 function churrascovegano(){
+  quebrouasleisdanutricionista.play();
+
   linguica.break();
 grandechurrasco.cabou();
 grandechurrasco=null;
@@ -126,3 +151,16 @@ function alfredoencontroufelicidade(corpo,sprite){
   }
 }
 
+function barulhosdoSentimento(){
+  Matter.Body.applyForce(natura,{x:0,y:0},{x:0.01,y:0});
+  ffffffff.play();
+}
+
+
+function buchoCheio(){
+  if(musicadotiozao.isPlaying()){
+    musicadotiozao.stop();
+  }else{
+    musicadotiozao.play();
+  }
+}
