@@ -23,6 +23,15 @@ var comeuBesteira;
 var musicadotiozao, quebrouasleisdanutricionista, comidasuja, comidagostosa, ffffffff;
 var chicotedanutricionista;
 var caixadeSom;
+var tentacao2;
+var tentacao3;
+var linguica2;
+var linguica3;
+var grandechurrasco2;
+var grandechurrasco3;
+
+
+
 
 function preload(){
   academia = loadImage("background.png");
@@ -59,9 +68,13 @@ function setup()
   seAlimentando.frameDelay = 20;
  
   ground = new Ground(200, 690, 600, 20);
-  linguica=new Rope(6,{x:245,y:30});
+  linguica=new Rope(8,{x:40,y:30});
 
+  linguica2=new Rope(7,{x:370,y:40});
 
+  linguica3=new Rope(4,{x:400,y:225});
+
+  
 var options={
   density:0.001
 }
@@ -70,7 +83,14 @@ Matter.Composite.add(linguica.body,natura);
 
 grandechurrasco=new Grandechurrasco(linguica,natura)
 
-alfredofitness=createSprite(420,630,100,100);
+grandechurrasco2=new Grandechurrasco(linguica2,natura)
+
+grandechurrasco3=new Grandechurrasco(linguica3,natura)
+
+
+
+
+alfredofitness=createSprite(170,630,100,100);
 alfredofitness.addImage(alfredo);
 alfredofitness.scale=0.2;
 alfredofitness.addAnimation("piscadinha", piscadinha);
@@ -78,15 +98,27 @@ alfredofitness.addAnimation("seAlimentando", seAlimentando);
 alfredofitness.addAnimation("comeuBesteira",comeuBesteira);
 alfredofitness.changeAnimation("piscadinha");
 
-chicotedanutricionista=createImg("balloon.png");
-chicotedanutricionista.position(10,250);
-chicotedanutricionista.size(150,100);
-chicotedanutricionista.mouseClicked(barulhosdoSentimento);
+//chicotedanutricionista=createImg("balloon.png");
+//chicotedanutricionista.position(10,250);
+//chicotedanutricionista.size(150,100);
+//chicotedanutricionista.mouseClicked(barulhosdoSentimento);
 
 tentacao=createImg("cut_button.png");
-tentacao.position(220,30);
+tentacao.position(20,30);
 tentacao.size(50,50);
 tentacao.mouseClicked(churrascovegano);
+
+tentacao2=createImg("cut_button.png");
+tentacao2.position(330,35);
+tentacao2.size(50,50);
+tentacao2.mouseClicked(churrascovegano2);
+
+tentacao3=createImg("cut_button.png");
+tentacao3.position(360,200);
+tentacao3.size(50,50);
+tentacao3.mouseClicked(churrascovegano3);
+
+
 
 caixadeSom=createImg("mute.png");
 caixadeSom.position(450,20);
@@ -115,6 +147,14 @@ function draw()
 
   ground.show();
   linguica.show();
+
+  linguica2.show();
+
+  linguica3.show();
+
+
+
+
   if( alfredoencontroufelicidade(natura,alfredofitness)===true){
     alfredofitness.changeAnimation("seAlimentando");
     comidagostosa.play();
@@ -137,6 +177,27 @@ grandechurrasco.cabou();
 grandechurrasco=null;
 
 }
+
+function churrascovegano2(){
+  quebrouasleisdanutricionista.play();
+
+  linguica2.break();
+grandechurrasco2.cabou();
+grandechurrasco2=null;
+
+}
+
+function churrascovegano3(){
+  quebrouasleisdanutricionista.play();
+
+  linguica3.break();
+grandechurrasco3.cabou();
+grandechurrasco3=null;
+
+}
+
+
+
 
 function alfredoencontroufelicidade(corpo,sprite){
   if(corpo!==null){
